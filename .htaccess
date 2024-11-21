@@ -2,3 +2,56 @@
 <IfModule mod_headers.c>
     Header set X-Lazy-Load "true"
 </IfModule>
+# Enable UTF-8 character encoding for all files
+AddDefaultCharset UTF-8
+
+# Redirect www to non-www (optional, use if needed)
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.maricic32\.github\.io$ [NC]
+RewriteRule ^(.*)$ https://maricic32.github.io/$1 [L,R=301]
+
+# Set up proper caching for images, CSS, JavaScript, and other static files
+<FilesMatch "\.(jpg|jpeg|png|gif|css|js|ico|woff|woff2|ttf|svg|eot|otf)$">
+  Header set Cache-Control "max-age=31536000, public"
+</FilesMatch>
+
+# Force HTTPS (if your site uses SSL, make sure to change the domain accordingly)
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Block access to sensitive files (security)
+<FilesMatch "\.(htaccess|htpasswd|ini|log|conf|env|json)$">
+  Order Deny,Allow
+  Deny from all
+</FilesMatch>
+
+# Prevent directory browsing
+Options -Indexes
+
+# Enable compression for better performance
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/x-javascript application/javascript application/json
+
+# Set up proper MIME types for files (to avoid issues with file handling in browsers)
+AddType application/font-woff2 .woff2
+AddType application/font-woff .woff
+
+# Remove the .html extension from URLs (optional)
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.html [L]
+
+# Prevent hotlinking of images
+RewriteEngine On
+RewriteCond %{HTTP_REFERER} !^https://maricic32.github.io/ [NC]
+RewriteRule \.(jpg|jpeg|png|gif|bmp|webp|svg|ico)$ - [F,NC]
+
+# Set custom error pages (Optional, make sure to create these pages)
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+
+# Enable GZIP compression for text-based content
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application/javascript application/json
+</IfModule>
