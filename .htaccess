@@ -5,17 +5,8 @@
 RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-# Keširanje statičkih fajlova
-<FilesMatch "\.(jpg|jpeg|png|gif|css|js|ico|woff|woff2|ttf|svg|eot|otf)$">
-    Header set Cache-Control "max-age=31536000, public"
-</FilesMatch>
-# Blokiranje pristupa osetljivim fajlovima
-<FilesMatch "\.(htaccess|htpasswd|ini|log|conf|env|json)$">
-    Order Deny,Allow
-    Deny from all
-</FilesMatch>
-# Sprečavanje hotlinking-a slika
-RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 RewriteCond %{HTTP_REFERER} !^https://maricic32.github.io/ [NC]
 RewriteRule \.(jpg|jpeg|png|gif|bmp|webp|svg|ico)$ - [F,NC]
 
