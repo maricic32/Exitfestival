@@ -1,4 +1,4 @@
 User-agent: *
-Disallow:
-
-Sitemap: https://maricic32.github.io/sitemap.xml
+Disallow: 
+Disallow: /cgi-bin/
+Sitemap: https://github.com/maricic32/Exitfestival/blob/main/sitemap.xml
