@@ -18,8 +18,4 @@ RewriteCond %{HTTP_REFERER} !^https://maricic32.github.io/ [NC]
     ExpiresByType application/javascript "access plus 1 month"
     ExpiresByType text/css "access plus 1 month"
 </IfModule>
-<FilesMatch "\.(woff|woff2|eot|ttf|otf)$">
-    ExpiresActive On
-    ExpiresDefault "access plus 1 year"
-</FilesMatch>
 
