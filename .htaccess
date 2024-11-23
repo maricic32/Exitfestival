@@ -1,7 +1,5 @@
-# Omogući Lazy Loading za slike
 <IfModule mod_headers.c>
     Header set X-Lazy-Load "true"
-# Preusmeravanje na HTTPS i uklanjanje www
 RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
